@@ -1,9 +1,21 @@
-all: src
+REBAR ?= $(CURDIR)/rebar3
 
-src:
-	rebar compile xref
+compile:
+	$(REBAR) compile
 
-clean:
-	rebar clean
+test: eunit ct dialyzer xref
 
-.PHONY: clean src
+eunit:
+	$(REBAR) eunit --cover
+
+ct:
+	$(REBAR) ct --cover
+
+dialyzer:
+	$(REBAR) dialyzer
+
+xref:
+	$(REBAR) xref
+
+all:
+	$(REBAR) compile test
